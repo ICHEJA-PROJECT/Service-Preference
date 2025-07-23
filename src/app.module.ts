@@ -4,6 +4,7 @@ import { envsValues } from './core/getEnvs';
 import { ImpairmentModule } from './Impairments/impairment.module';
 import { WordModule } from './Words/word.module';
 import { OccupationModule } from './Occupation/occupation.module';
+import { RegionModule } from './Region/region.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { OccupationModule } from './Occupation/occupation.module';
     ImpairmentModule,
     WordModule,
     OccupationModule,
+    RegionModule,
   ],
   controllers: [],
   providers: [],
