@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { envsValues } from './core/getEnvs';
 import { ImpairmentModule } from './Impairments/impairment.module';
 import { WordModule } from './Words/word.module';
+import { OccupationModule } from './Occupation/occupation.module';
 
 @Module({
   imports: [
@@ -18,7 +19,8 @@ import { WordModule } from './Words/word.module';
       logging: true
     }),
     ImpairmentModule,
-    WordModule
+    WordModule,
+    OccupationModule,
   ],
   controllers: [],
   providers: [],
