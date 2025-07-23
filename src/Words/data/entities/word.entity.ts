@@ -4,6 +4,8 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { WordMeaningEntity } from "./word_meaning.entity";
 import { WordOccupationI } from "src/Occupation/domain/entitiesI/WordOccupationI";
 import { WordOccupationEntity } from "src/Occupation/data/entities/word_occupation.entity";
+import { WordRegionI } from "src/Region/domain/entitiesI/WordRegionI";
+import { WordRegionEntity } from "src/Region/data/entities/word_region.entity";
 
 @Entity('palabra')
 export class WordEntity implements WordI {
@@ -15,4 +17,6 @@ export class WordEntity implements WordI {
     meanings: WordMeaningI[];
     @OneToMany(() => WordOccupationEntity, wordOccupation => wordOccupation.word)
     occupations: WordOccupationI[];
+    @OneToMany(() => WordRegionEntity, wordRegion => wordRegion.word)
+    regions: WordRegionI[];
 }
