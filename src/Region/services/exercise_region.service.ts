@@ -52,4 +52,15 @@ export class ExerciseRegionService {
         }
     }
 
+    async findByRegionsOnlyIds(regionsIds: number[]) {
+        try {
+            return await this.exerciseRegionRepository.findByRegionsOnlyIds(regionsIds);
+        } catch (error) {
+            throw new RpcException({
+                message: error.message,
+                status: HttpStatus.BAD_REQUEST,
+            });
+        }
+    }
+
 }

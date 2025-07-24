@@ -3,7 +3,7 @@ import { LearningPathImpairmentI } from "src/Impairments/domain/entitiesI/Learni
 import { Entity, ManyToOne, PrimaryColumn } from "typeorm";
 import { ImpairmentEntity } from "./impairment.entity";
 
-@Entity('ruta_aprendizaje_discapacidad')
+@Entity('ruta_aprendizaje_discapacidades')
 export class LearningPathImpairmentEntity implements LearningPathImpairmentI {
     @PrimaryColumn({name: 'id_ruta_aprendizaje', type: 'int', nullable: false})
     learningPathId: number;

@@ -29,4 +29,10 @@ export class ReactiveImpairmentController {
     async findByImpairment(@Param('id') impairmentId: number) {
         return await this.reactiveImpairmentService.findeByImpairment(impairmentId);
     }
+
+    @Get('learning-paths/:id')
+    @HttpCode(HttpStatus.OK)
+    async findByLearningPath(@Param('id') learningPathId: number) {
+        return await this.reactiveImpairmentService.findByLearningPath(learningPathId);
+    }
 }

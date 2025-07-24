@@ -7,7 +7,7 @@ import { ImpairmentEntity } from "./impairment.entity";
 export class ResourceImpairmentEntity implements ResourceImpairmentI {
     @PrimaryColumn({name: 'id_recurso', type: 'int', nullable: false})
     resourceId: number;
-    @PrimaryColumn({name: 'id_ discapacidad', type: 'int', nullable: false})
+    @PrimaryColumn({name: 'id_discapacidad', type: 'int', nullable: false})
     impairmentId: number;
     @ManyToOne(() => ImpairmentEntity, impairment => impairment.resources)
     impairment: ImpairmentI;

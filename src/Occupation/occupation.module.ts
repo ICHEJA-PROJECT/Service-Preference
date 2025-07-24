@@ -44,6 +44,9 @@ import { WordEntity } from "src/Words/data/entities/word.entity";
         WordOccupationService,
         ExerciseOccupationService,
     ],
-    exports: [],
+    exports: [
+        StudentOccupationService,
+        ExerciseOccupationService,
+    ],
 })
 export class OccupationModule {}

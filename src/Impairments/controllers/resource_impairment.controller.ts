@@ -29,4 +29,10 @@ export class ResourceImpairmentController {
     async findByImpairment(@Param('id') impairmentId: number) {
         return await this.resourceImpairmentService.findByImpairment(impairmentId);
     }
+
+    @Get('learning-paths/:id')
+    @HttpCode(HttpStatus.OK)
+    async findByLearningPath(@Param('id') learningPathId: number) {
+        return await this.resourceImpairmentService.findeByLearningPath(learningPathId);
+    }
 }

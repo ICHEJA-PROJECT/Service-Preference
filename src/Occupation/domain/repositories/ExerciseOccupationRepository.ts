@@ -6,4 +6,5 @@ export interface ExerciseOccupationRepository {
     findByExercise(exerciseId: number): Promise<ExerciseOccupationI[]>;
     findByOccupation(occupationId: number): Promise<ExerciseOccupationI[]>;
     findByOccupationOnlyIds(occupationId: number): Promise<number[]>;
+    findByOccupationsOnlyIds(occupationsIds: number[]): Promise<number[]>;
 }
