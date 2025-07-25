@@ -101,4 +101,15 @@ export class StudentImpairmentRepositoryImpl implements StudentImpairmentReposit
         }
     }
 
+    async findByStudentWithDetails(studentId: number): Promise<any> {
+        try {
+            const impairment = await this.studentImpairmentRepository.findOneOrFail({where: {studentId}});
+            return impairment.impairmentId;
+        } catch (error) {
+            throw new RpcException({
+                message: error.message,
+                status: HttpStatus.BAD_REQUEST,
+            });
+        }
+    }
 }
