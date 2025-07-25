@@ -1,5 +1,5 @@
 import { WordRegionI } from "src/Region/domain/entitiesI/WordRegionI";
-import { Entity, ManyToOne, PrimaryColumn } from "typeorm";
+import { Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
 import { RegionEntity } from "./region.entity";
 import { RegionI } from "src/Region/domain/entitiesI/RegionI";
 import { WordI } from "src/Words/domain/entitiesI/WordI";
@@ -12,7 +12,9 @@ export class WordRegionEntity implements WordRegionI {
     @PrimaryColumn({name: 'id_region', type: 'int', nullable: false})
     regionId: number;
     @ManyToOne(() => RegionEntity, region => region.words)
+    @JoinColumn({ name: 'id_region' })
     region: RegionI;
     @ManyToOne(() => WordEntity, word => word.regions)
+    @JoinColumn({ name: 'id_palabra' })
     word: WordI;
 }

@@ -7,5 +7,5 @@ export interface StudentImpairmentRepository {
     findByStudent(studentId: number): Promise<string[]>;
     findByStudentOnlyIds(studentId: number): Promise<StudentImpairmentI[]>;
     findByImpairmentOnlyIds(impairmentIdd: number): Promise<StudentImpairmentI[]>;
-    findByStudentWithDetails(studentId: number): Promise<any>;
+    findByStudentWithDetails(studentId: number): Promise<StudentImpairmentI>;
 }

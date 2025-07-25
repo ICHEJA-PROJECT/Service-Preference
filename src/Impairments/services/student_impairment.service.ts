@@ -9,9 +9,7 @@ import { ImpairmentService } from "./impairment.service";
 @Injectable()
 export class StudentImpairmentService {
     constructor(
-        @Inject(StudentImpairmentRepositoryImpl) private readonly studentImpairmentRepository: StudentImpairmentRepository,
-        private readonly impairmentService: ImpairmentService,
-        private readonly learningPathImpairmentService: LearningPathImpairmentService
+        @Inject(StudentImpairmentRepositoryImpl) private readonly studentImpairmentRepository: StudentImpairmentRepository
     ) {}
 
     async create(createStudentImpairmentDto: CreateStudentImpairmentDto) {
@@ -76,16 +74,12 @@ export class StudentImpairmentService {
 
     async findByStudentWithDetails(studentId: number) {
         try {
-            const impairmentId = await this.studentImpairmentRepository.findByStudentWithDetails(studentId);
-            const impairment = await this.impairmentService.findOne(impairmentId);
-            const learningPath = await this.learningPathImpairmentService.findByImpairment(impairmentId);
-
-            console.log(learningPath);
+            const studentImpairment = await this.studentImpairmentRepository.findByStudentWithDetails(studentId);
 
             return {
-                impairmentId,
-                impairmentName: impairment.name,
-                learningPathId: learningPath[0]
+                impairmentId: studentImpairment.impairment.id,
+                impairmentName: studentImpairment.impairment.name,
+                learningPathId: studentImpairment.impairment.learningPaths[0].learningPathId,
             }
         } catch (error) {
             throw new RpcException({
