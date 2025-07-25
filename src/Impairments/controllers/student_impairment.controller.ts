@@ -32,4 +32,9 @@ export class StudentImpairmentController {
     async getByStudent(@Payload('id') studentId: number) {
         return await this.studentImpairmentService.findByStudent(studentId);
     }
+
+    @MessagePattern({ cmd: PREFERENCES_SERVICE_OPTIONS.STUDENT_IMPAIRMENT_FIND_BY_STUDENT_WITH_DETAILS })
+    async getByStudentWithDetails(@Payload('id') studentId: number) {
+        return await this.studentImpairmentService.findByStudentWithDetails(studentId);
+    }
 }

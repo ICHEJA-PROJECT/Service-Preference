@@ -33,6 +33,7 @@ export const PREFERENCES_SERVICE_OPTIONS = {
     STUDENT_IMPAIRMENT_FIND_BY_IMPAIRMENT_ONLY_IDS: 'student.impairment.findByImpairment.onlyIds',
     STUDENT_IMPAIRMENT_FIND_BY_STUDENT_ONLY_IDS: 'student.impairment.findByStudent.onlyIds',
     STUDENT_IMPAIRMENT_FIND_BY_STUDENT: 'student.impairment.findByStudent',
+    STUDENT_IMPAIRMENT_FIND_BY_STUDENT_WITH_DETAILS: 'student.impairment.findByStudent.withDetails',
 
     //! ---------------- Occupation controllers ---------------
     OCCUPATION_CREATE: 'occupation.create',
