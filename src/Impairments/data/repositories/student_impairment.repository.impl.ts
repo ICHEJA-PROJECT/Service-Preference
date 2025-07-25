@@ -101,10 +101,10 @@ export class StudentImpairmentRepositoryImpl implements StudentImpairmentReposit
         }
     }
 
-    async findByStudentWithDetails(studentId: number): Promise<any> {
+    async findByStudentWithDetails(studentId: number): Promise<StudentImpairmentI> {
         try {
-            const impairment = await this.studentImpairmentRepository.findOneOrFail({where: {studentId}});
-            return impairment.impairmentId;
+            const impairment = await this.studentImpairmentRepository.findOneOrFail({where: {studentId}, relations: {impairment: {learningPaths: true}}});
+            return impairment;
         } catch (error) {
             throw new RpcException({
                 message: error.message,
