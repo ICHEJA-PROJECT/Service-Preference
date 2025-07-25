@@ -1,40 +1,35 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Inject, Param, Post } from "@nestjs/common";
-import { StudentImpairmentRepositoryImpl } from "../data/repositories/student_impairment.repository.impl";
-import { StudentImpairmentRepository } from "../domain/repositories/StudentImpairmentRepository";
+import { Controller } from "@nestjs/common";
 import { CreateStudentImpairmentDto } from "../data/dtos/create-student-impairment.dto";
-import { RpcException } from "@nestjs/microservices";
+import { MessagePattern, Payload } from "@nestjs/microservices";
+import { PREFERENCES_SERVICE_OPTIONS } from "src/shared/constants/preferences_service_options";
+import { StudentImpairmentService } from "../services/student_impairment.service";
 
 @Controller('students-impairments')
 export class StudentImpairmentController {
-    constructor(@Inject(StudentImpairmentRepositoryImpl) private readonly studentImpairmentRepository: StudentImpairmentRepository) {}
+    constructor(private readonly studentImpairmentService: StudentImpairmentService) {}
 
-    @Post()
-    @HttpCode(HttpStatus.CREATED)
-    async create(@Body() createStudentImpairmentDto: CreateStudentImpairmentDto) {
-        return await this.studentImpairmentRepository.create(createStudentImpairmentDto);
+    @MessagePattern({ cmd: PREFERENCES_SERVICE_OPTIONS.STUDENT_IMPAIRMENT_CREATE })
+    async create(@Payload() createStudentImpairmentDto: CreateStudentImpairmentDto) {
+        return await this.studentImpairmentService.create(createStudentImpairmentDto);
     }
 
-    @Get()
-    @HttpCode(HttpStatus.OK)
+    @MessagePattern({ cmd: PREFERENCES_SERVICE_OPTIONS.STUDENT_IMPAIRMENT_FIND_ALL })
     async getAll() {
-        return await this.studentImpairmentRepository.findAll();
+        return await this.studentImpairmentService.findAll();
     }
 
-    @Get('impairments/:id/ids')
-    @HttpCode(HttpStatus.OK)
-    async getByImpairmentOnlyIds(@Param('id') impairmentId: number) {
-        return await this.studentImpairmentRepository.findByImpairmentOnlyIds(impairmentId);
+    @MessagePattern({ cmd: PREFERENCES_SERVICE_OPTIONS.STUDENT_IMPAIRMENT_FIND_BY_IMPAIRMENT_ONLY_IDS })
+    async getByImpairmentOnlyIds(@Payload('id') impairmentId: number) {
+        return await this.studentImpairmentService.findByImpairmentOnlyIds(impairmentId);
     }
 
-    @Get('students/:id/ids')
-    @HttpCode(HttpStatus.OK)
-    async getByStudentOnlyIds(@Param('id') studentId: number) {
-        return await this.studentImpairmentRepository.findByStudentOnlyIds(studentId);
+    @MessagePattern({ cmd: PREFERENCES_SERVICE_OPTIONS.STUDENT_IMPAIRMENT_FIND_BY_STUDENT_ONLY_IDS })
+    async getByStudentOnlyIds(@Payload('id') studentId: number) {
+        return await this.studentImpairmentService.findByStudentOnlyIds(studentId);
     }
 
-    @Get('students/:id')
-    @HttpCode(HttpStatus.OK)
-    async getByStudent(@Param('id') studentId: number) {
-        return await this.studentImpairmentRepository.findByStudent(studentId);
+    @MessagePattern({ cmd: PREFERENCES_SERVICE_OPTIONS.STUDENT_IMPAIRMENT_FIND_BY_STUDENT })
+    async getByStudent(@Payload('id') studentId: number) {
+        return await this.studentImpairmentService.findByStudent(studentId);
     }
 }

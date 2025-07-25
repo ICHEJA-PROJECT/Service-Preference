@@ -1,38 +1,35 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post } from "@nestjs/common";
+import { Controller} from "@nestjs/common";
 import { ReactiveImpairmentService } from "../services/reactive_impairment.service";
 import { CreateReactiveImpairmentDto } from "../data/dtos/create-reactive-impairment.dto";
+import { MessagePattern, Payload } from "@nestjs/microservices";
+import { PREFERENCES_SERVICE_OPTIONS } from "src/shared/constants/preferences_service_options";
 
 @Controller('reactive-impairments')
 export class ReactiveImpairmentController {
     constructor(private readonly reactiveImpairmentService: ReactiveImpairmentService) {}
 
-    @Post()
-    @HttpCode(HttpStatus.CREATED)
-    async create(@Body() createReactiveImpairmentDto: CreateReactiveImpairmentDto) {
+    @MessagePattern({  cmd: PREFERENCES_SERVICE_OPTIONS.REACTIVE_IMPAIRMENT_CREATE })
+    async create(@Payload() createReactiveImpairmentDto: CreateReactiveImpairmentDto) {
         return await this.reactiveImpairmentService.create(createReactiveImpairmentDto);
     }
 
-    @Get()
-    @HttpCode(HttpStatus.OK)
+    @MessagePattern({  cmd: PREFERENCES_SERVICE_OPTIONS.REACTIVE_IMPAIRMENT_FIND_ALL })
     async findAll() {
         return await this.reactiveImpairmentService.findAll();
     }
 
-    @Get('reactives/:id')
-    @HttpCode(HttpStatus.OK)
-    async findByReactive(@Param('id') reactiveId: number) {
+    @MessagePattern({  cmd: PREFERENCES_SERVICE_OPTIONS.REACTIVE_IMPAIRMENT_FIND_BY_REACTIVE })
+    async findByReactive(@Payload('id') reactiveId: number) {
         return await this.reactiveImpairmentService.findByReactive(reactiveId);
     }
 
-    @Get('impairments/:id')
-    @HttpCode(HttpStatus.OK)
-    async findByImpairment(@Param('id') impairmentId: number) {
+    @MessagePattern({ cmd: PREFERENCES_SERVICE_OPTIONS.REACTIVE_IMPAIRMENT_FIND_BY_IMPAIRMENT })
+    async findByImpairment(@Payload('id') impairmentId: number) {
         return await this.reactiveImpairmentService.findeByImpairment(impairmentId);
     }
 
-    @Get('learning-paths/:id')
-    @HttpCode(HttpStatus.OK)
-    async findByLearningPath(@Param('id') learningPathId: number) {
+    @MessagePattern({ cmd: PREFERENCES_SERVICE_OPTIONS.REACTIVE_IMPAIRMENT_FIND_BY_LEARNING_PATH })
+    async findByLearningPath(@Payload('id') learningPathId: number) {
         return await this.reactiveImpairmentService.findByLearningPath(learningPathId);
     }
 }
