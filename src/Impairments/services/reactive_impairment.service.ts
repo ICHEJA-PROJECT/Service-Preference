@@ -3,10 +3,15 @@ import { ReactiveImpairmentRepositoryImpl } from "../data/repositories/reactive_
 import { ReactiveImpairmentRepository } from "../domain/repositories/ReactiveImpairmentRepository";
 import { CreateReactiveImpairmentDto } from "../data/dtos/create-reactive-impairment.dto";
 import { RpcException } from "@nestjs/microservices";
+import { LearningPathImpairmentService } from "./learning_path_impairment.service";
 
 @Injectable()
 export class ReactiveImpairmentService {
-    constructor(@Inject(ReactiveImpairmentRepositoryImpl) private readonly reactiveImpairmentRepository: ReactiveImpairmentRepository) {}
+    constructor(
+        @Inject(ReactiveImpairmentRepositoryImpl) 
+        private readonly reactiveImpairmentRepository: ReactiveImpairmentRepository,
+        private readonly learningPathImpairmentService: LearningPathImpairmentService,
+    ) {}
 
     async create(createReactiveImpairmentDto: CreateReactiveImpairmentDto) {
         try {
@@ -52,6 +57,21 @@ export class ReactiveImpairmentService {
             throw new RpcException({
                 message: error.message,
                 status: HttpStatus.BAD_REQUEST
+            });
+        }
+    }
+
+    async findByLearningPath(learningPathId: number) {
+        try {
+            const learningPathImpairment = await this.learningPathImpairmentService.findOne(learningPathId);
+
+            const reactivesImpairments = await this.findeByImpairment(learningPathImpairment.impairment.id);
+
+            return reactivesImpairments;
+        } catch (error) {
+            throw new RpcException({
+                message: error.message,
+                status: HttpStatus.BAD_REQUEST,
             });
         }
     }

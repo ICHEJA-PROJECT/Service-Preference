@@ -5,6 +5,7 @@ import { envsValidator } from "./config/validators/envs.validator";
 const getEnvs = (): EnvsI => {
     const { error, value } = envsValidator.validate({
         ...process.env,
+        BROKER_HOSTS: process.env.BROKER_HOSTS?.split(', '),
     });
 
     if (error) {
@@ -18,6 +19,7 @@ const getEnvs = (): EnvsI => {
         DB_PORT: value.DB_PORT,
         DB_USERNAME: value.DB_USERNAME,
         DB_PASSWORD: value.DB_PASSWORD,
+        BROKER_HOSTS: value.BROKER_HOSTS
     };
 };
 

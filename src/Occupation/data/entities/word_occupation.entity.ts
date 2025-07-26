@@ -2,7 +2,7 @@ import { OccupationI } from "src/Occupation/domain/entitiesI/OccupationI";
 import { WordOccupationI } from "src/Occupation/domain/entitiesI/WordOccupationI";
 import { WordEntity } from "src/Words/data/entities/word.entity";
 import { WordI } from "src/Words/domain/entitiesI/WordI";
-import { Entity, ManyToOne, PrimaryColumn } from "typeorm";
+import { Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
 import { OccupationEntity } from "./occupation.entity";
 
 @Entity('ocupacion_palabras')
@@ -12,7 +12,9 @@ export class WordOccupationEntity implements WordOccupationI {
     @PrimaryColumn({name: 'id_ocupacion', type: 'int'})
     occupationId: number;
     @ManyToOne(() => WordEntity, word => word.occupations)
+    @JoinColumn({ name: 'id_palabra' })
     word: WordI;
     @ManyToOne(() => OccupationEntity, occupation => occupation.words)
+    @JoinColumn({ name: 'id_ocupacion' })
     occupation: OccupationI;
 }

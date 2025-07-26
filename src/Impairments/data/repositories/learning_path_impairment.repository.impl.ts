@@ -81,4 +81,16 @@ export class LearningPathImpairmentRepositoryImpl implements LearningPathImpairm
             });
         }
     }
+
+    async findOne(id: number): Promise<LearningPathImpairmentI> {
+        try {
+            const learningPathImpairment = await this.learningPathImpairmentRepository.findOneOrFail({where: {learningPathId: id}, relations: {impairment: true}});
+            return learningPathImpairment;
+        } catch (error) {
+            throw new RpcException({
+                message: error.message,
+                status: HttpStatus.BAD_REQUEST,
+            });
+        }
+    }
 }

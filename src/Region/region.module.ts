@@ -44,6 +44,9 @@ import { StudentRegionService } from "./services/student_region.service";
         StudentRegionService,
         ExerciseRegionService
     ],
-    exports: []
+    exports: [
+        StudentRegionService,
+        ExerciseRegionService,
+    ]
 })
 export class RegionModule {}

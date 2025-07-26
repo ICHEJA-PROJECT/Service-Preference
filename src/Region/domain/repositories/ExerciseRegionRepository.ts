@@ -6,4 +6,5 @@ export interface ExerciseRegionRepository {
     findByExercise(exerciseId: number): Promise<ExerciseRegionI[]>;
     findByRegion(regionId: number): Promise<ExerciseRegionI[]>;
     findByRegionOnlyIds(regionId: number): Promise<number[]>;
+    findByRegionsOnlyIds(regionsIds: number[]): Promise<number[]>;
 }

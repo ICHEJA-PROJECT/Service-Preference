@@ -55,4 +55,16 @@ export class LearningPathImpairmentService {
             });
         }
     }
+
+    async findOne(id: number) {
+        try {
+            const learningPathImpairment = await this.learningPathImpairmentRepository.findOne(id);
+            return learningPathImpairment;
+        } catch (error) {
+            throw new RpcException({
+                message: error.message,
+                status: HttpStatus.BAD_REQUEST,
+            });
+        }
+    }
 }

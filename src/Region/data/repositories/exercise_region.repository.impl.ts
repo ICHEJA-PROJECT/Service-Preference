@@ -1,7 +1,7 @@
 import { HttpStatus, Inject, Injectable } from "@nestjs/common";
 import { ExerciseRegionRepository } from "src/Region/domain/repositories/ExerciseRegionRepository";
 import { ExerciseRegionEntity } from "../entities/exercise_region.entity";
-import { Repository } from "typeorm";
+import { In, Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 import { RegionEntity } from "../entities/region.entity";
 import { ExerciseRegionI } from "src/Region/domain/entitiesI/ExerciseRegionI";
@@ -69,4 +69,15 @@ export class ExerciseRegionRepositoryImpl implements ExerciseRegionRepository {
         }
     }
 
+    async findByRegionsOnlyIds(regionsIds: number[]): Promise<number[]> {
+        try {
+            return await this.exerciseRegionRepository.find({where: {regionId: In(regionsIds)}})
+                .then((regions) => regions.map((region) => region.exerciseId));
+        } catch (error) {
+            throw new RpcException({
+                message: error.message,
+                status: HttpStatus.BAD_REQUEST,
+            });
+        }
+    }
 }

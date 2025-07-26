@@ -8,4 +8,5 @@ export const envsValidator = Joi.object<EnvsI>({
     DB_HOST: Joi.string().required(),
     DB_USERNAME: Joi.string().required(),
     DB_PASSWORD: Joi.string().required(),
+    BROKER_HOSTS: Joi.array().items(Joi.string()).required().description('Hosts of the message broker'),
 }).unknown(true);

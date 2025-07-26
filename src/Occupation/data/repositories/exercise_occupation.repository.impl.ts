@@ -1,7 +1,7 @@
 import { HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ExerciseOccupationRepository } from "src/Occupation/domain/repositories/ExerciseOccupationRepository";
-import { Repository } from "typeorm";
+import { In, Repository } from "typeorm";
 import { ExerciseOccupationEntity } from "../entities/exercise_occupation.entity";
 import { OccupationEntity } from "../entities/occupation.entity";
 import { ExerciseOccupationI } from "src/Occupation/domain/entitiesI/ExerciseOccupationI";
@@ -89,6 +89,18 @@ export class ExerciseOccupationRepositoryImpl implements ExerciseOccupationRepos
             throw new RpcException({
                 status: HttpStatus.BAD_REQUEST,
                 message: error.message,
+            });
+        }
+    }
+
+    async findByOccupationsOnlyIds(occupationsIds: number[]): Promise<number[]> {
+        try {
+            return await this.exerciseOccupationRepository.find({where: {occupationId: In(occupationsIds)}})
+                .then(occupations => occupations.map((occupation) => occupation.exerciseId));
+        } catch (error) {
+            throw new RpcException({
+                message: error.message,
+                status: HttpStatus.BAD_REQUEST,
             });
         }
     }

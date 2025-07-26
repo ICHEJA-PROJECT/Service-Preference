@@ -31,6 +31,8 @@ export class ResourceImpairmentRepositoryImpl implements ResourceImpairmentRepos
                 impairment: impairment
             });
 
+            console.log(resourceImpairment);
+
             return await this.resourceImpairmentRepository.save(resourceImpairment);
         } catch (error) {
             throw new RpcException({

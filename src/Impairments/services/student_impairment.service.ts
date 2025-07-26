@@ -3,10 +3,14 @@ import { StudentImpairmentRepositoryImpl } from "../data/repositories/student_im
 import { StudentImpairmentRepository } from "../domain/repositories/StudentImpairmentRepository";
 import { CreateStudentImpairmentDto } from "../data/dtos/create-student-impairment.dto";
 import { RpcException } from "@nestjs/microservices";
+import { LearningPathImpairmentService } from "./learning_path_impairment.service";
+import { ImpairmentService } from "./impairment.service";
 
 @Injectable()
 export class StudentImpairmentService {
-    constructor(@Inject(StudentImpairmentRepositoryImpl) private readonly studentImpairmentRepository: StudentImpairmentRepository) {}
+    constructor(
+        @Inject(StudentImpairmentRepositoryImpl) private readonly studentImpairmentRepository: StudentImpairmentRepository
+    ) {}
 
     async create(createStudentImpairmentDto: CreateStudentImpairmentDto) {
         try {
@@ -64,6 +68,23 @@ export class StudentImpairmentService {
             throw new RpcException({
                 message: error.message,
                 status: HttpStatus.BAD_REQUEST
+            });
+        }
+    }
+
+    async findByStudentWithDetails(studentId: number) {
+        try {
+            const studentImpairment = await this.studentImpairmentRepository.findByStudentWithDetails(studentId);
+
+            return {
+                impairmentId: studentImpairment.impairment.id,
+                impairmentName: studentImpairment.impairment.name,
+                learningPathId: studentImpairment.impairment.learningPaths[0].learningPathId,
+            }
+        } catch (error) {
+            throw new RpcException({
+                message: error.message,
+                status: HttpStatus.BAD_REQUEST,
             });
         }
     }

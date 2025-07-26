@@ -51,4 +51,15 @@ export class ExerciseOccupationService {
             });
         }
     }
+
+    async findByOccupationsOnlyIds(occupationsIds: number[]) {
+        try {
+            return await this.exerciseOccupationRepository.findByOccupationsOnlyIds(occupationsIds);
+        } catch (error) {
+            throw new RpcException({
+                message: error.message,
+                status: HttpStatus.BAD_REQUEST,
+            });
+        }
+    }
 }

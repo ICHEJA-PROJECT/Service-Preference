@@ -1,19 +1,19 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post } from "@nestjs/common";
+import { Controller } from "@nestjs/common";
 import { WordOccupationService } from "../services/word_occupation.service";
 import { CreateWordOccupationDto } from "../data/dtos/create-word-occupation.dto";
+import { MessagePattern, Payload } from "@nestjs/microservices";
+import { PREFERENCES_SERVICE_OPTIONS } from "src/shared/constants/preferences_service_options";
 
 @Controller('word-occupations')
 export class WordOccupationController {
     constructor(private readonly wordOccupationService: WordOccupationService) {}
 
-    @Post()
-    @HttpCode(HttpStatus.CREATED)
-    async create(@Body() createWordOccupationDto: CreateWordOccupationDto) {
+    @MessagePattern({ cmd: PREFERENCES_SERVICE_OPTIONS.WORD_OCCUPATION_CREATE })
+    async create(@Payload() createWordOccupationDto: CreateWordOccupationDto) {
         return await this.wordOccupationService.create(createWordOccupationDto);
     }
 
-    @Get()
-    @HttpCode(HttpStatus.OK)
+    @MessagePattern({ cmd: PREFERENCES_SERVICE_OPTIONS.WORD_OCCUPAIION_FIND_ALL })
     async findAll() {
         return await this.wordOccupationService.findAll();
     }
