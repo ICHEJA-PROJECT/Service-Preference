@@ -1,5 +1,4 @@
 export interface EnvsI {
-    PORT: number;
     DB_NAME: string;
     DB_PORT: number;
     DB_HOST: string;

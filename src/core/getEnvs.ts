@@ -13,7 +13,6 @@ const getEnvs = (): EnvsI => {
     }
 
     return {
-        PORT: value.PORT,
         DB_NAME: value.DB_NAME,
         DB_HOST: value.DB_HOST,
         DB_PORT: value.DB_PORT,
